@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.TransactionMapper">
+  <resultMap id="BaseResultMap" type="entity.Transaction">
+    <id column="transaction_id" jdbcType="INTEGER" property="transactionId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="payment" jdbcType="BIT" property="payment" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="change" jdbcType="DOUBLE" property="change" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    transaction_id, user_id, payment, status, time, price, `change`, amount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Transaction
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Transaction
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.Transaction">
+    insert into Transaction (transaction_id, user_id, payment, 
+      status, time, price, `change`,
+      amount)
+    values (#{transactionId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{payment,jdbcType=BIT}, 
+      #{status,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}, #{change,jdbcType=DOUBLE},
+      #{amount,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="transactionId" parameterType="entity.Transaction">
+    insert into Transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="payment != null">
+        payment,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="change != null">
+        `change`,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null">
+        #{payment,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="change != null">
+        #{change,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Transaction">
+    update Transaction
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null">
+        payment = #{payment,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="change != null">
+        `change` = #{change,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Transaction">
+    update Transaction
+    set user_id = #{userId,jdbcType=INTEGER},
+      payment = #{payment,jdbcType=BIT},
+      status = #{status,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DOUBLE},
+      `change` = #{change,jdbcType=DOUBLE},
+      amount = #{amount,jdbcType=DOUBLE}
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </update>
+</mapper>
